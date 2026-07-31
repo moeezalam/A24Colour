@@ -74,6 +74,8 @@ npm install
 npm start
 ```
 
+Or run both halves in one go with `setup.sh` (macOS/Linux) or `setup.bat` (Windows) — they check for Python and Node, create the venv, and install both dependency sets.
+
 ## API
 
 Base path `/api/v1`.
@@ -121,7 +123,6 @@ Measured on the sample scene above, so you know what you're getting:
 - **The Lighthouse preset crushes the image.** Mean brightness drops from 84 to 12 out of 255 — an 86% loss. Saturation falls to 7, so the black-and-white intent lands, but almost all detail is gone. The exposure compensation for that preset needs work.
 - **Aspect-ratio control doesn't run on the API path.** The `aspect_ratio` field is defined on every preset and `AspectRatioProcessor` is implemented, but `EnhancedA24StyleProcessor` — the one the endpoints actually use — never calls it. Only the older `A24StyleProcessor` applies composition.
 - **The LUTs are procedural.** They approximate each film's palette; they are not the actual LUTs used in production.
-- **Two empty modules:** `backend/app/core/composition.py` and `backend/app/services/enhanced_style_service.py` are 0 bytes. `frontend/src/hooks/useImageProcessing.tsx` and `frontend/src/services/api.tsx` are 0-byte duplicates of the real `.ts` files and should be deleted.
 - **Redis and Celery are declared but barely wired.** Async jobs currently live in an in-process dict, so they don't survive a restart or scale past one worker.
 - **CPU only.** 2–5 seconds per image is typical.
 

@@ -142,3 +142,7 @@ tmp/
 # Test files
 test-images/
 sample-images/
+
+# Output written by backend/test_processing.py
+backend/test_original.jpg
+backend/test_*.jpg
